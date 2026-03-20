@@ -27,5 +27,14 @@ class Factory:
          return 0.0
     
     def upgrade(self):
-
+        self._max_health *= 1.5
+        self._health = self._max_health
+        self._cash *= 1.5
+        self._upgrade_cost *= 1.5
         pass
+
+    @property
+    def stats(self):
+        return f'{self._health} / {self._max_health}'
+
+    
