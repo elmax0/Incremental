@@ -18,6 +18,7 @@ class Factory:
         if not self._running:
             return 0.0
         return self._cash_per_second * timedelta
+
     
     def click(self, damage) -> float:
          self._health -= damage
@@ -36,5 +37,28 @@ class Factory:
     @property
     def stats(self):
         return f'{self._health} / {self._max_health}'
+    
+    def render(self, terminal, x, y, w, h):
+        """Zeichnet eine Box mit optionalem Titel."""
+        # Ecken
+        terminal.put(x, y, 0x250C)              # ┌
+        terminal.put(x + w - 1, y, 0x2510)      # ┐
+        terminal.put(x, y + h - 1, 0x2514)      # └
+        terminal.put(x + w - 1, y + h - 1, 0x2518)  # ┘
 
+        # Horizontale Linien
+        for i in range(1, w - 1):
+            terminal.put(x + i, y, 0x2500)          # ─
+            terminal.put(x + i, y + h - 1, 0x2500)
+
+        # Vertikale Linien
+        for j in range(1, h - 1):
+            terminal.put(x, y + j, 0x2502)          # │
+            terminal.put(x + w - 1, y + j, 0x2502)
+
+        # Titel
+        if self._name:
+            label = f" {self._name} "
+            terminal.printf(x + 2, y, label)
+        pass
     
