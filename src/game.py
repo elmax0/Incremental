@@ -1,5 +1,6 @@
 from player import Player
 from factory import Factory
+from keyboard import keyboard
 
 class Game:
     def __init__(self):
@@ -15,7 +16,6 @@ class Game:
     def run(self):
         while self._active:
             # TODO:
-            self.handle_input()
             self.tick()
         pass
 
@@ -25,9 +25,12 @@ class Game:
 
     def handle_input(self):
         
+        if keyboard.is_pressed('b'):
+            self.buy()
+
         pass
 
-    def buy(self, index):
+    def buy(self):
         # TODO:
         pass
 
@@ -36,5 +39,6 @@ class Game:
         pass
 
     def tick(self):
+        self.handle_input()
         self.money += self.factory.tick()
         pass
