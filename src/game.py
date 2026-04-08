@@ -1,8 +1,12 @@
 from player import Player
 from factory import Factory
 from keyboard import keyboard
+from datetime import datetime
+
+TICK_TIME = .05
 
 class Game:
+    _last_tick_time = None
     def __init__(self):
         self._active = False
         self.factory = Factory('Fact', 10, 1, 1, 10)
@@ -14,6 +18,7 @@ class Game:
         pass
 
     def run(self):
+        self._last_tick_time = datetime.now()
         while self._active:
             # TODO:
             self.tick()

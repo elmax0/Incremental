@@ -32,7 +32,12 @@ class Factory:
         self._health = self._max_health
         self._cash *= 1.5
         self._upgrade_cost *= 1.5
-        pass
+        if self._level > 10:
+            if self._cash_per_second == 0:
+                self._cash_per_second = 1.5
+                return
+            self._cash_per_second *= 2
+    
 
     @property
     def stats(self):
