@@ -4,7 +4,7 @@ from bearlibterminal import terminal
 
 class Renderer:
 
-    def __init__(self, width=120, height=40):
+    def __init__(self, width=120, height=80):
         self._width = width
         self._height = height
         terminal.open()
@@ -19,14 +19,14 @@ class Renderer:
             pass
     
     def split_view(self):
-        
+                
         pass
 
     def draw_box(self, x: int, y: int, w: int, h: int, title: str = ""):
-        if x < 5:
+        if w < 5:
             raise Exception('Box zu klein')
 
-        if y < 5:
+        if h < 5:
             raise Exception('Box zu klein')
         # Text abgefangen
         if w < len(title):
@@ -53,11 +53,18 @@ class Renderer:
             diff = int((w - len(label))/2)
             terminal.printf(x + diff, y, label)
         pass
+    
+    def draw_boxes(self):
+        for i in range(4):
+            self.draw_box(i*30, 40, 30, 40, f'Title {i}')
+
+        pass
 
     def test_render(self):
         while True:
             terminal.clear()
-            self.draw_box(10, 10, 10, 20, 'Svensonsonsonsonson')
+            # self.draw_box(10, 10, 10, 20, 'Svensonsonsonsonson')
+            self.draw_boxes()
             terminal.refresh()
 
 if __name__ == '__main__':
