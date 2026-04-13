@@ -1,6 +1,7 @@
 # TODO: Rendering (fml)
 
 from bearlibterminal import terminal
+from factory import Factory
 
 class Renderer:
 
@@ -18,8 +19,21 @@ class Renderer:
             
             pass
     
-    def split_view(self):
-                
+    def draw(self, fac_data, box_data):
+        # data -> [1 upper, 4 boxes]
+        self.draw_fac(fac_data)
+        self.draw_boxes(box_data)
+        pass
+
+    def draw_fac(self, factory):
+        # Box mit Namen
+        self.draw_box(0, 0, self._width, int(self._height/2), factory._name)
+        
+        # Stats
+        terminal.printf(1, 2, factory.stats)
+        terminal.printf(1, 3, str(factory._cash))
+        terminal.printf(1, 4, str(factory._upgrade_cost))
+        terminal.printf(1, 5, f'DPS: {factory._cash_per_second}')
         pass
 
     def draw_box(self, x: int, y: int, w: int, h: int, title: str = ""):
@@ -54,9 +68,9 @@ class Renderer:
             terminal.printf(x + diff, y, label)
         pass
     
-    def draw_boxes(self):
+    def draw_boxes(self, box_data):
         for i in range(4):
-            self.draw_box(i*30, 40, 30, 40, f'Title {i}')
+            self.draw_box(i*30, 40, 30, 40, box_data[i])
 
         pass
 
@@ -67,6 +81,15 @@ class Renderer:
             self.draw_boxes()
             terminal.refresh()
 
+    def test_render2(self, factory : Factory):
+        boxes = ['box1', 'box2', 'box3', 'box4']
+        while True:
+            terminal.clear()
+            self.draw(factory, boxes)
+            terminal.refresh()
+        pass
+
 if __name__ == '__main__':
+    factory = Factory('factory', 100, 10, 0, 10)
     r = Renderer()
-    r.test_render()
+    r.test_render2(factory)

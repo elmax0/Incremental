@@ -1,4 +1,4 @@
-from decimal import decimal 
+from decimal import Decimal 
 
 class Factory:
     def __init__(self, name, health, cash, cash_per_second, upgrade_cost, level: int = 1, active: bool = False):
