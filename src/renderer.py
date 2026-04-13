@@ -14,9 +14,10 @@ class Renderer:
         self.running = True
         pass
 
-    def render(self):
-        while self.running:
-            
+    def render(self, game_state):
+        switch(game_stat)
+        fac_data = game_state[0]
+        box_data = 
             pass
     
     def draw(self, fac_data, box_data):
