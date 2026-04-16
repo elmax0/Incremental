@@ -2,6 +2,8 @@
 
 from bearlibterminal import terminal
 from factory import Factory
+from character import Character
+
 
 class Renderer:
 
@@ -17,8 +19,7 @@ class Renderer:
     def render(self, game_state):
         switch(game_stat)
         fac_data = game_state[0]
-        box_data = 
-            pass
+        box_data = [] 
     
     def draw(self, fac_data, box_data):
         # data -> [1 upper, 4 boxes]
@@ -37,6 +38,43 @@ class Renderer:
         terminal.printf(1, 5, f'DPS: {factory._cash_per_second}')
         pass
 
+    def draw_character(self, x: int, y: int, w: int, h: int, char: Character = Character("Template")):
+        if w < 5:
+            raise Exception('Box zu klein')
+
+        if h < 5:
+            raise Exception('Box zu klein')
+        # Text abgefangen
+        if w < len(char.name):
+            w = len(char.name) + 4
+
+        # Ecken
+        terminal.put(x, y, 0x250C)
+        terminal.put(x + w - 1, y, 0x2510)
+        terminal.put(x, y + h -1, 0x2514)
+        terminal.put(x + w -1, y + h -1, 0x2518)
+
+        # Horiz
+        for i in range(1, w - 1):
+            terminal.put(x + i, y, 0x2500)
+            terminal.put(x + i, y + h - 1, 0x2500)
+
+        # Vert
+        for j in range(1, h-1):
+            terminal.put(x, y + j, 0x2502)
+            terminal.put(x + w - 1, y + j, 0x2502)
+
+        if char:
+            label = f" {char.name} "
+            diff = int((w - len(label))/2)
+            terminal.printf(x + diff, y, label)
+            diff = int((w - len(char.health))/2)
+            terminal.printf(x + diff, y+1, char.health)
+            for i in range(char.get_values()):
+                
+                pass
+        pass
+ 
     def draw_box(self, x: int, y: int, w: int, h: int, title: str = ""):
         if w < 5:
             raise Exception('Box zu klein')
@@ -71,7 +109,7 @@ class Renderer:
     
     def draw_boxes(self, box_data):
         for i in range(4):
-            self.draw_box(i*30, 40, 30, 40, box_data[i])
+            self.draw_character(i*30, 40, 30, 40, box_data[i])
 
         pass
 
@@ -83,7 +121,7 @@ class Renderer:
             terminal.refresh()
 
     def test_render2(self, factory : Factory):
-        boxes = ['box1', 'box2', 'box3', 'box4']
+        boxes = [ Character('Dieter'),  Character('Vieter') ,  Character('Tieter') ,  Character('Pieter')]
         while True:
             terminal.clear()
             self.draw(factory, boxes)
